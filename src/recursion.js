@@ -24,22 +24,54 @@ var sum = function (array) {
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
+
+
 var arraySum = function (array) {
+    //console.log('ARRAY SUM --------------------------------');
+    const [a, ...rest] = array;
+
+    //console.log('array: ', JSON.stringify(array));
+    if (array.length === 0) return 0;
+
+    if (typeof a === "number") {
+        //console.log('a num: ', a, 'rest: ', rest);
+        return a + arraySum(rest);
+    }
+    if (Array.isArray(a)) {
+        //console.log('   a IS ARRAY: ', a, '   rest: ', rest);
+        return arraySum(a) + arraySum(rest);
+    }
 };
 
 // 4. Check if a number is even.
 var isEven = function (n) {
+    if (n === 0) return true;
+    if (n === 1) return false;
+    if (n < 1) return isEven(-n);
+    return isEven(n - 2);
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function (n) {
+    if (n === 0) return 0;
+    if (n > 0) return (n - 1) + sumBelow(n - 1);
+    if (n < 0) return (n + 1) + sumBelow(n + 1);
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function (x, y) {
+
+    if (x === y || x + 1 === y) return [];
+    if (x - 1 > y) {
+        return [...[x - 1]] + range(x - 1, y);
+    }
+    if (x + 1 < y) {
+        return [...[x + 1]] + range(x + 1, y);
+    }
+
 };
 
 // 7. Compute the exponent of a number.
@@ -48,6 +80,12 @@ var range = function (x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function (base, exp) {
+    console.log('--------------------');
+    console.log(base, exp);
+    if (exp === 0 || base === 1) return 1;
+    if (exp === 1) return base;
+    if (exp < 0) return base * exponent(base, exp + 1)
+    return base * exponent(base, exp - 1);
 };
 
 // 8. Determine if a number is a power of two.
